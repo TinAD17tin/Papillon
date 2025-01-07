@@ -112,7 +112,7 @@
     "\\brapport\\sde\\s(?:TP|travaux\\spratiques|expérience|manipulation)\\b",
     "\\bséance\\sde\\s(?:travaux\\spratiques|manipulation|expérimentation)\\b"
   ],
-  "Exercice": [
+  "Exercices": [
     "\\bexercice\\b(?!\\s+pratique\\s+(en\\s+(laboratoire|atelier|classe|terrain)))",
     "\\bexo\\b"
 ]
