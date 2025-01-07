@@ -111,5 +111,9 @@
     "\\btravaux\\spratiques\\s(?:dirigés|en\\sgroupe|individuels|expérimentaux)\\b",
     "\\brapport\\sde\\s(?:TP|travaux\\spratiques|expérience|manipulation)\\b",
     "\\bséance\\sde\\s(?:travaux\\spratiques|manipulation|expérimentation)\\b"
-  ]
+  ],
+  "Exercice": [
+    "\\bexercice\\b(?!\\s+pratique\\s+(en\\s+(laboratoire|atelier|classe|terrain)))",
+    "\\bexo\\b"
+]
 }
