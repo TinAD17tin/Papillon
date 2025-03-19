@@ -57,8 +57,8 @@ const SettingsSupport: Screen<"SettingsSupport"> = ({ navigation }) => {
     setDescription("");
     setSendLogs(false);
     showAlert({
-      title: "Merci de vos retours !",
-      message: "Nous avons reçu votre demande et allons la regarder avec la plus grande attention.",
+      title: "Merci de ton retour !",
+      message: "Nous avons reçu ta demande et allons la regarder avec la plus grande attention.",
       icon: <Check />,
     });
   };
@@ -109,7 +109,7 @@ const SettingsSupport: Screen<"SettingsSupport"> = ({ navigation }) => {
                 fontSize: 16,
                 fontFamily: "semibold",
               }, { color: theme.colors.text }]}
-              placeholder="Faites court, mais faites bien"
+              placeholder="Fais court, mais fais bien"
               placeholderTextColor={theme.colors.text + "80"}
               value={subject}
               multiline={false}
@@ -125,7 +125,7 @@ const SettingsSupport: Screen<"SettingsSupport"> = ({ navigation }) => {
                 marginVertical: -4,
                 fontFamily: "semibold",
               }, { color: theme.colors.text }]}
-              placeholder="Expliquez votre problème de manière détaillée afin de nous aider à résoudre le problème rapidement."
+              placeholder="Explique ton problème de manière détaillée afin que nous puissions t’aider à le résoudre rapidement."
               placeholderTextColor={theme.colors.text + "80"}
               value={description}
               multiline={true}
