@@ -298,7 +298,7 @@ const RestaurantCardDetail: Screen<"RestaurantCardDetail"> = ({ route, navigatio
                   Repas restants
                 </NativeText>
                 <NativeText variant="subtitle">
-                  Tarif estimé à {card.balance[0].price?.toFixed(2)} €
+                  Tarif estimé à {(card.balance[0].price / 100)?.toFixed(2)} €
                 </NativeText>
               </NativeItem>
             </NativeList>
