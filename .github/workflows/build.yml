@@ -27,39 +27,6 @@ jobs:
         distribution: "temurin" # Distribution Temurin (privilégiée)
         java-version: "17"
 
-    # 2. 📄 Récupérer le fichier JSON des sources et patchs
-    - name: 📄 Fetch Patch List
-      id: fetch_patch_list
-      run: |
-        curl -sL -H "Cache-Control: no-cache, no-store" https://raw.githubusercontent.com/Gabriel29306/datasets/main/papillon_7_patchs.json -o patch_list.json
-        echo $(cat patch_list.json)
-
-    # 3. 🗂️ Extraire les informations des sources et patchs
-    - name: 🗂️ Parse Sources and Patch List
-      id: parse_patch_list
-      run: |
-        echo "Parsing sources and patch list..."
-        MAIN_REPO="https://github.com/PapillonApp/Papillon.git"
-        ALL_PATCHES=$(jq -r '.patchs | join(",")' patch_list.json)
-        echo "MAIN_REPO=$MAIN_REPO" >> $GITHUB_ENV
-        echo "ALL_PATCHES=$ALL_PATCHES" >> $GITHUB_ENV
-
-        # Extraire les sources sous forme de paires "nom=url"
-        jq -r '.source | to_entries[] | "\(.key)=\(.value)"' patch_list.json > sources.txt
-
-    # 4. 🔎 Vérifier et choisir les patchs à appliquer
-    - name: 🔎 Select Patches
-      id: select_patches
-      run: |
-        PATCH_INPUT="${{ inputs.patch_selection }}"
-        if [[ "$PATCH_INPUT" == "all" ]]; then
-          SELECTED_PATCHES=$ALL_PATCHES
-        else
-          SELECTED_PATCHES=$PATCH_INPUT
-        fi
-        echo "Selected patches: $SELECTED_PATCHES"
-        echo "SELECTED_PATCHES=$SELECTED_PATCHES" >> $GITHUB_ENV
-
     # 5. 🛠️ Cloner le main repo
     - name: 🛠️ Clone Main Repository
       run: |
@@ -80,32 +47,6 @@ jobs:
       run: |
         git config --global user.email "github-actions@github.com"
         git config --global user.name "GitHub Actions"
-
-    # 8. 🔗 Ajouter les upstreams et appliquer les patchs
-    - name: 🔗 Add Upstreams and Merge Patches
-      run: |
-        cd target-repo
-        # Ajouter chaque upstream depuis sources.txt
-        while IFS='=' read -r NAME URL; do
-          echo "Adding remote: $NAME -> $URL"
-          git remote add "$NAME" "$URL"
-          git fetch "$NAME"
-        done < ../sources.txt
-
-        # Appliquer les patchs
-        IFS=',' read -ra PATCHES <<< "$SELECTED_PATCHES"
-        for PATCH in "${PATCHES[@]}"; do
-          # Extraire nom et branche (par exemple : Gabriel29306/branch-name)
-          NAME=$(echo "$PATCH" | cut -d'/' -f1)
-          BRANCH=$(echo "$PATCH" | cut -d'/' -f2)
-          echo "Merging patch: $NAME/$BRANCH"
-          git fetch "$NAME" "$BRANCH"
-          git merge "$NAME/$BRANCH" -s recursive || {
-            echo "Conflict detected. Forcing merge for patch $PATCH."
-            git merge --abort
-            git merge "$NAME/$BRANCH" -s recursive -X theirs
-          }
-        done
 
     # 9. 📦 Installer les dépendances
     - name: 📦 Install Dependencies
