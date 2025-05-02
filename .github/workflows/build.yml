@@ -121,7 +121,7 @@ jobs:
           } catch (error) {
             console.log("Error fetching releases: ", error);
             console.log("Using default versionCode 100.");
-            core.setOutput("versionCode", 100);
+            core.setOutput("versionCode", 7800);
           }
     
     # 15. 🔢 Incrémentation de la version
