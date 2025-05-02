@@ -30,6 +30,7 @@ jobs:
     # 5. 🛠️ Cloner le main repo
     - name: 🛠️ Clone Main Repository
       run: |
+        MAIN_REPO="https://github.com/PapillonApp/Papillon.git"
         git clone $MAIN_REPO target-repo
         cd target-repo
         git checkout main
